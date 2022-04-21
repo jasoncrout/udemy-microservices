@@ -21,7 +21,7 @@ const onSubmit = async (event) => {
                     <label>Title</label>
                     <input value={title} onChange={event => setTitle(event.target.value)} className="form-control"></input>
                 </div>
-                <button className="btn btn-primary">Submit</button>
+                <button className="btn btn-primary mt-3">Submit</button>
             </form>
         </div>
     );
