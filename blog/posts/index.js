@@ -1,9 +1,11 @@
 import express from "express";
 import { randomBytes } from "crypto";
+import cors from "cors";
 
 const app = express();
 
 app.use(express.json());
+app.use(cors());
 
 const posts = {};
 
@@ -18,7 +20,6 @@ app.route("/posts")
         posts[id] = {
             id, title
         };
-
         res.status(201).send(posts[id]);
     });
 
