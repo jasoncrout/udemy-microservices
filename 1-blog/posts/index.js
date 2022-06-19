@@ -38,5 +38,6 @@ app.route("/events")
     })
 
 app.listen(4000, () => {
+    console.log("On Docker Hub! V2");
     console.log("Listening on port 4000");
 })
