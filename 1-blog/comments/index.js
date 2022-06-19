@@ -26,7 +26,7 @@ app.route("/posts/:id/comments")
         commentsByPostId[req.params.id] = comments;
 
         try {
-            await axios.post("http://localhost:4005/events", {
+            await axios.post("http://event-bus-clusterip-srv:4005/events", {
                 type: "CommentCreated",
                 data: {
                     id: commentId,
@@ -58,7 +58,7 @@ app.route("/events")
 
             comment.status = status;
             try {
-                await axios.post("http://localhost:4005/events", {
+                await axios.post("http://event-bus-clusterip-srv:4005/events", {
                     type: "CommentUpdated",
                     data: {
                         id,
