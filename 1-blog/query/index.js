@@ -49,6 +49,9 @@ app.route("/events")
 
 app.listen(4002, async () => {
     console.log("Listening on port 4002");
+    
+    // wait 2 seconds for event bus to finish setting up
+    await new Promise(r => setTimeout(r, 2000));
 
     try {
         const res = await axios.get("http://event-bus-clusterip-srv:4005/events");

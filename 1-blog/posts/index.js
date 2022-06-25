@@ -13,7 +13,9 @@ const posts = {};
 app.route("/posts")
     .get((req, res) => {
         res.send(posts)
-    })
+    });
+
+app.route("/posts/create")
     .post(async (req, res) => {
         const id = randomBytes(4).toString("hex");
         const { title } = req.body;
