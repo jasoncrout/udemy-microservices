@@ -10,57 +10,55 @@ app.use(cors());
 const posts = {};
 
 const handleEvent = (type, data) => {
-    if (type === "PostCreated") {
-        const { id, title } = data;
+  if (type === "PostCreated") {
+    const { id, title } = data;
 
-        posts[id] = { id, title, comments: []};
-    }
-    if (type === "CommentCreated") {
-        const { id, content, postId, status } = data;
+    posts[id] = { id, title, comments: [] };
+  }
+  if (type === "CommentCreated") {
+    const { id, content, postId, status } = data;
 
-        const post = posts[postId];
-        post.comments.push({ id, content, status });
-    }
-    if (type === "CommentUpdated") {
-        const { id, content, postId, status } = data;
-        const post = posts[postId];
-        const comment = post.comments.find(comment => {
-            return comment.id === id;
-        });
-
-        comment.status = status;
-        comment.content = content;
-    }
-}
-
-app.route("/posts")
-    .get((req, res) => {
-        res.send(posts);
+    const post = posts[postId];
+    post.comments.push({ id, content, status });
+  }
+  if (type === "CommentUpdated") {
+    const { id, content, postId, status } = data;
+    const post = posts[postId];
+    const comment = post.comments.find((comment) => {
+      return comment.id === id;
     });
 
-app.route("/events")
-    .post((req, res) => {
-        const { type, data } = req.body;
+    comment.status = status;
+    comment.content = content;
+  }
+};
 
-        handleEvent(type, data);
+app.route("/posts").get((req, res) => {
+  res.send(posts);
+});
 
-        res.send({});
-    });
+app.route("/events").post((req, res) => {
+  const { type, data } = req.body;
+
+  handleEvent(type, data);
+
+  res.send({});
+});
 
 app.listen(4002, async () => {
-    console.log("Listening on port 4002");
-    
-    // wait 2 seconds for event bus to finish setting up
-    await new Promise(r => setTimeout(r, 2000));
+  console.log("Listening on port 4002");
 
-    try {
-        const res = await axios.get("http://event-bus-clusterip-srv:4005/events");
-        console.log(res.data);
-        for (let event of res.data) {
-            console.log("Processing event:", event.type);
-            handleEvent(event.type, event.data);
-        }
-    } catch (err) {
-        console.log(err);
+  // wait 2 seconds for event bus to finish setting up
+  await new Promise((r) => setTimeout(r, 2000));
+
+  try {
+    const res = await axios.get("http://event-bus-clusterip-srv:4005/events");
+    console.log(res.data);
+    for (let event of res.data) {
+      console.log("Processing event:", event.type);
+      handleEvent(event.type, event.data);
     }
+  } catch (err) {
+    console.log(err);
+  }
 });
