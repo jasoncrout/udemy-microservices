@@ -6,8 +6,7 @@ import { currentUserRouter } from "./routes/currentuser";
 import { signinRouter } from "./routes/signin";
 import { signoutRouter } from "./routes/signout";
 import { signupRouter } from "./routes/singup";
-import { errorHandler } from "./middlewares/error-handler";
-import { RouteNotFoundError } from "./errors/route-not-found-error";
+import { errorHandler, RouteNotFoundError } from "@jc-ticketing/common";
 
 const app = express();
 app.set("trust proxy", true);
