@@ -6,6 +6,10 @@ import {
   RouteNotFoundError,
   currentUser,
 } from "@jc-ticketing/common";
+import { indexOrderRouter } from "./routes";
+import { deleteOrderRouter } from "./routes/delete";
+import { newOrderRouter } from "./routes/new";
+import { showOrderRouter } from "./routes/show";
 
 const app = express();
 app.set("trust proxy", true);
@@ -19,6 +23,11 @@ app.use(
 );
 
 app.use(currentUser);
+
+app.use(indexOrderRouter);
+app.use(deleteOrderRouter);
+app.use(newOrderRouter);
+app.use(showOrderRouter);
 
 app.all("*", async () => {
   throw new RouteNotFoundError();
