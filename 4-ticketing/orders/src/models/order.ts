@@ -2,6 +2,8 @@ import { OrderStatus } from "@jc-ticketing/common";
 import mongoose, { mongo } from "mongoose";
 import { TicketDoc } from "./ticket";
 
+export { OrderStatus };
+
 interface OrderAttrs {
   userId: string;
   status: OrderStatus;
