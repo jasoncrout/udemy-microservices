@@ -25,7 +25,7 @@
     "typescript": "^4.7.4"
   },
   "dependencies": {
-    "@jc-ticketing/common": "^1.0.9",
+    "@jc-ticketing/common": "^1.0.10",
     "@types/bull": "^3.15.9",
     "bull": "^4.9.0",
     "node-nats-streaming": "^0.3.2"
