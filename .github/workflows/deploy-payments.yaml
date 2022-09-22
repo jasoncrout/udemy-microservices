@@ -4,8 +4,6 @@ on:
   push:
     branches:
       - main
-    paths:
-      - "4-ticketing/payments/**"
 
 jobs:
   build:
