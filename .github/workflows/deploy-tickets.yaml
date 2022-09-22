@@ -1,0 +1,28 @@
+name: deploy-tickets
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "4-ticketing/tickets/**"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./4-ticketing
+    steps:
+      - uses: actions/checkout@v3
+      - run: cd tickets && docker build -t jasoncrout/ticketing-tickets .
+      - run: docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
+        env:
+          DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+          DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+      - run: docker push jasoncrout/ticketing-tickets
+      - uses: digitalocean/action-doctl@v2
+        with:
+          token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
+      - run: doctl kubernetes cluster kubeconfig save ticketing
+      - run: kubectl rollout restart deployment tickets-depl
