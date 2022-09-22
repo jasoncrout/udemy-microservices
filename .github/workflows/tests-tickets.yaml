@@ -2,6 +2,8 @@ name: tests-tickets
 
 on:
   pull_request:
+    paths:
+      - '4-ticketing/tickets/**'
 
 jobs:
   build:
