@@ -3,7 +3,7 @@ name: tests-auth
 on:
   pull_request:
     paths:
-      - '4-ticketing/auth/**'
+      - "4-ticketing/auth/**"
 
 jobs:
   build:
